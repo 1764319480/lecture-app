@@ -323,6 +323,7 @@ $margin-height: 30rpx;
       padding: $margin-height 0;
       background-color: white;
       height: 100rpx;
+      width: 90vw;
       position: fixed;
       z-index: 1;
     };
