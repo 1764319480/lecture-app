@@ -1,0 +1,71 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^u--(.*)": "uview-plus/components/u-$1/u-$1.vue",
+      "^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+      "^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+    }
+  },
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "高校讲座预约系统"
+      }
+    },
+    {
+      "path": "pages/sort/sort",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/person/person",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+	"color": "#7A7E83",
+	"selectedColor": "#1744d7",
+	"borderStyle": "black",
+	"backgroundColor": "#ffffff",
+	"list": [{
+		"pagePath": "pages/home/home",
+		"iconPath": "static/image/logistics-warehouse.png",
+		"selectedIconPath": "static/image/logistics-warehouse-fill.png",
+		"text": "首页"
+	}, 
+	{
+		"pagePath": "pages/sort/sort",
+		"iconPath": "static/image/all.png",
+		"selectedIconPath": "static/image/all-fill.png",
+		"text": "分类"
+	},
+	{
+		"pagePath": "pages/person/person",
+		"iconPath": "static/image/customer-certified.png",
+		"selectedIconPath": "static/image/customer-certified-fill.png",
+		"text": "个人"
+	}
+	]
+}
+
+}
