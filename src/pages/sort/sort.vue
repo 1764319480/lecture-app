@@ -79,7 +79,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101113",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -93,7 +93,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101114",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -107,7 +107,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101115",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -121,7 +121,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101116",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -135,7 +135,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101117",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -149,7 +149,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101118",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -163,7 +163,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101119",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -177,7 +177,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101110",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -191,7 +191,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101102",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -205,7 +205,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101103",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -219,7 +219,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101105",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",
@@ -233,7 +233,7 @@ const allLectures = [
   },
   {
     lec_title: "道德课堂",
-    lec_id: "101112",
+    lec_id: "101106",
     lec_master: "李先生",
     lec_time: "2024-11-14-10:00-11:10",
     lec_place: "拓新楼105",

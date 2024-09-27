@@ -34,6 +34,14 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/lecturedetail/lecturedetail",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
     }
   ],
   "globalStyle": {
@@ -43,29 +51,29 @@
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
-	"color": "#7A7E83",
-	"selectedColor": "#1744d7",
-	"borderStyle": "black",
-	"backgroundColor": "#ffffff",
-	"list": [{
-		"pagePath": "pages/home/home",
-		"iconPath": "static/image/logistics-warehouse.png",
-		"selectedIconPath": "static/image/logistics-warehouse-fill.png",
-		"text": "首页"
-	}, 
-	{
-		"pagePath": "pages/sort/sort",
-		"iconPath": "static/image/all.png",
-		"selectedIconPath": "static/image/all-fill.png",
-		"text": "分类"
-	},
-	{
-		"pagePath": "pages/person/person",
-		"iconPath": "static/image/customer-certified.png",
-		"selectedIconPath": "static/image/customer-certified-fill.png",
-		"text": "个人"
-	}
-	]
-}
-
+    "color": "#7A7E83",
+    "selectedColor": "#1744d7",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/image/logistics-warehouse.png",
+        "selectedIconPath": "static/image/logistics-warehouse-fill.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/sort/sort",
+        "iconPath": "static/image/all.png",
+        "selectedIconPath": "static/image/all-fill.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/person/person",
+        "iconPath": "static/image/customer-certified.png",
+        "selectedIconPath": "static/image/customer-certified-fill.png",
+        "text": "个人"
+      }
+    ]
+  }
 }

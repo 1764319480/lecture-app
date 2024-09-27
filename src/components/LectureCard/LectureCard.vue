@@ -12,25 +12,24 @@
         <view>
           <up-button @click="goDetail(item.lec_id)" shape="circle" text="详情"></up-button>
           <up-button type="primary" @click="goPopup(item.lec_title)" shape="circle" text="预约"></up-button>
-          <up-popup :show="show" :round="10" mode="center" :safeAreaInsetBottom=false>
-            <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
-              display: flex;justify-content: center;">温馨提示</view>
-            <view style="display: flex; flex-direction: column;justify-content: space-around;height: 200rpx;padding:0 10rpx;">
-              <view>
-                <text style="color: red;">确定</text>
-                预约讲座《
-                <text style="color: blue;">{{select_title}}</text>》？
-              </view>
-              <view>
-                <up-button @click="show = false" shape="circle" text="取消"></up-button>
-                &nbsp;&nbsp;
-                <up-button type="primary" @click="show = false" shape="circle" text="确定"></up-button>
-              </view> 
-            </view>
-          </up-popup>
         </view>
       </view>
     </template>
+    <up-popup :show="show" :round="10" mode="center" :safeAreaInsetBottom=false>
+      <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
+              display: flex;justify-content: center;">温馨提示</view>
+      <view style="display: flex; flex-direction: column;justify-content: space-around;height: 200rpx;padding:0 10rpx;">
+        <view>
+          <text style="color: red;">确定</text>
+          预约讲座《
+          <text style="color: blue;">{{ select_title }}</text>》？
+        </view>
+        <view style="display: flex; justify-content: center;align-items: center;">
+          <view><up-button @click="show = false" shape="circle" text="取消" ></up-button></view>
+          <view><up-button type="primary" @click="show = false" shape="circle" text="确定" ></up-button></view>
+        </view>
+      </view>
+    </up-popup>
   </view>
 </template>
 
@@ -72,6 +71,9 @@ const goPopup = (title:string) => {
 const userData = ref();
 // 详情跳转
 function goDetail(lec_id: string|number) {
+  uni.navigateTo({
+    url: `/pages/lecturedetail/lecturedetail?lec_id=${lec_id}`
+  })
 }
 // 讲座状态数字与文字转换
 function statusName(status:number) {
