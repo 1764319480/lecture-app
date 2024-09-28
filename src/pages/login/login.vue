@@ -123,6 +123,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useLecture } from '@/stores/lecture';
+const lectureData = useLecture();
 // 切换登录和注册
 const status = ref(true);
 //切换登录和改密
@@ -193,11 +195,11 @@ const login = async () => {
   // }
   // 普通用户验证
   if (oldAccount.value.length != 11 || isNaN(Number(oldAccount.value))) {
-    uni.showToast({ title: '账号格式错误' });
+    uni.showToast({ title: '账号格式错误',icon:'none' });
     return;
   }
   if (oldPassword.value.length < 8) {
-    uni.showToast({ title: '密码长度不能少于8位！' });
+    uni.showToast({ title: '密码长度不能少于8位！',icon:'none' });
     return;
   }
   // const res = userData.login(oldAccount.value, oldPassword.value);
