@@ -18,7 +18,7 @@ const myaxios = {
       return err;
     }
   },
-  async port(url, data) {
+  async post(url, data) {
     try {
       var res = await uni.request({
         url: this.baseURL + url.slice(5),
