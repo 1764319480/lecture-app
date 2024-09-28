@@ -35,7 +35,7 @@ export const useLecture = defineStore('lecture', () => {
     const res = await myaxios.get('/api/allLecture');
     lectures.value = res.data;
     // console.log(lectures);
-    return res;
+    // return res;
   }
   // 获取热门讲座
   async function hotLecture() {
