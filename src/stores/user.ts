@@ -19,8 +19,9 @@ export const useUser = defineStore('user', () => {
       token: user.value.token,
       userName: user.value.userName
     });
+    // console.log(res)
     if (res.data.hasOwnProperty('error')) {
-      uni.showToast({title: res.error, icon: 'none'});
+      uni.showToast({title: res.data.error, icon: 'none'});
     } else {
       user.value = { ...(res.data) };
     }
@@ -39,6 +40,7 @@ export const useUser = defineStore('user', () => {
       return res.data.error;
     } else {
       user.value = { ...(res.data) };
+      uni.setStorageSync('token', user.value.token);
       updateUser();
       lectureData.getCarousel();
       timer.value = setInterval(updateUser, 1000*10);

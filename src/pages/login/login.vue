@@ -123,8 +123,12 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useLecture } from '@/stores/lecture';
-const lectureData = useLecture();
+// import { useLecture } from '@/stores/lecture';
+import { useManager } from '@/stores/manager';
+import { useUser } from '@/stores/user';
+// const lectureData = useLecture();
+const managerData = useManager();
+const userData = useUser();
 // 切换登录和注册
 const status = ref(true);
 //切换登录和改密
@@ -185,7 +189,10 @@ const login = async () => {
   // if (managerData.list.includes(oldAccount.value)) {
   //   const res = await managerData.login(oldAccount.value, oldPassword.value);
   //   if (res) {
-  //     uni.showToast('欢迎管理员');
+  //     uni.showToast({
+  //       title:'欢迎管理员',
+  //       icon: 'none'
+  //     });
   //     await managerData.getCarousel();
   //     setTimeout(() => {
   //       router.push('/super/welcome');
@@ -202,25 +209,32 @@ const login = async () => {
     uni.showToast({ title: '密码长度不能少于8位！',icon:'none' });
     return;
   }
-  // const res = userData.login(oldAccount.value, oldPassword.value);
-  // res.then(async data => {
-  //   if (data == 1) {
-  //     sessionStorage.setItem('token', userData.user.token);
-  //     uni.showToast('登录成功');
-  //     if (userData.detailPath) {
-  //       setTimeout(() => {
-  //         router.push(`/lecture/?lec_id=${userData.detailPath}`);
-  //       }, 1000);
-  //     } else {
-  //       setTimeout(() => {
-  //         router.push('/home/page');
-  //       }, 1000);
-  //     }
-  //   } else {
-  //     uni.showToast(data);
-  //     return;
-  //   }
-  // })
+  const res = await userData.login(oldAccount.value, oldPassword.value);
+  if (res == 1) {
+    uni.showToast({
+      title: '登录成功',
+      icon: 'none'
+    });
+    if (userData.detailPath) {
+      setTimeout(() => {
+        uni.redirectTo({
+          url:`/pages/lecturedetail/lecturedetail?lec_id=${userData.detailPath}`
+        })
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        uni.switchTab({
+          url:'/pages/home/home'
+        })
+      }, 1000);
+    }
+  } else {
+    uni.showToast({
+      title: res,
+      icon: 'none'
+    });
+    return;
+  }
 }
 // 发送验证码
 const timeText = ref('发送验证码')
