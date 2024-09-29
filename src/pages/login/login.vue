@@ -44,7 +44,7 @@
           <form action="">
             <view>
               账号：<text style="color: transparent;">透明</text>
-              <up-input type="number" v-model="newAccount" placeholder="请输入手机号" clearable />
+              <up-input type="number" v-model="oldAccount" placeholder="请输入手机号" clearable />
             </view>
             <view>
               验证码：<text style="color: transparent;">透</text>
@@ -126,9 +126,15 @@ import { ref, watch } from 'vue'
 // import { useLecture } from '@/stores/lecture';
 import { useManager } from '@/stores/manager';
 import { useUser } from '@/stores/user';
+import { onReady } from '@dcloudio/uni-app';
 // const lectureData = useLecture();
 const managerData = useManager();
 const userData = useUser();
+// 获取管理员列表
+onReady(async () => {
+    await managerData.getManagerList();
+    userData.setTimer(false);
+})
 // 切换登录和注册
 const status = ref(true);
 //切换登录和改密
@@ -237,17 +243,173 @@ const login = async () => {
   }
 }
 // 发送验证码
-const timeText = ref('发送验证码')
-const sendIdCode = (value: string) => {
-  timeText.value = value;
+let timer:any = null;
+let checkIdCode:number|string;
+const timeText = ref('发送验证码');
+const sendIdCode =  async (typeText:string) => {
+    if (typeText == '注册' && newAccount.value.length != 11 || isNaN(Number(newAccount.value))) {
+        uni.showToast({
+          title: '账号格式错误',
+          icon: 'none'
+        });
+        return;
+    }
+    if (typeText == '修改密码' && oldAccount.value.length != 11 || isNaN(Number(oldAccount.value))) {
+        uni.showToast({
+          title: '账号格式错误',
+          icon: 'none'
+        });
+        return;
+    }
+    const res = await userData.isLogon(typeText == '注册' ? newAccount.value : oldAccount.value);
+    if (typeText == '修改密码' && res == false) {
+        uni.showToast({
+          title: '用户不存在',
+          icon: 'none'
+        });
+        return;
+    }
+    if (typeText == '注册' && res == true) {
+        uni.showToast({
+          title: '用户已存在',
+          icon: 'none'
+        });
+        return;
+    }
+    if (!timer) {
+        uni.showToast({
+          title: '发送成功',
+          icon: 'none'
+        });
+        let seconds = 60;
+        timer = setInterval(() => {
+            if (seconds == 0) {
+                timeText.value = '发送验证码';
+                checkIdCode = '';//1分钟验证码过期
+                clearInterval(timer);
+                timer = null;
+            } else {
+                timeText.value = seconds.toString();
+                seconds--;
+            }
+        }, 1000)
+        checkIdCode = Math.floor(Math.random() * 900000) + 100000;
+        console.log(`尊敬的用户，您正在进行${typeText}操作，这是您的验证码:${checkIdCode}，1分钟内有效！`)
+    }
 }
 // 修改密码
 const changePwd = async () => {
+  if (oldAccount.value.length != 11 || isNaN(Number(oldAccount.value))) {
+    uni.showToast({
+      title: '账号格式错误',
+      icon: 'none'
+    });
+    return;
+  }
+  if (newPassword.value.length < 8 || newPasswords.value.length < 8) {
+    uni.showToast({
+      title: '密码长度不能少于8位！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (!idCode.value) {
+    uni.showToast({
+      title: '请输入验证码！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (newPassword.value != newPasswords.value) {
+    uni.showToast({
+      title: '密码必须一致！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (checkIdCode != idCode.value) {
+    uni.showToast({
+      title: '验证码错误！',
+      icon: 'none'
+    });
+    return;
+  }
+  // if (!userData.user) {
+  //   uni.showToast({
+  //     title: '账号不存在',
+  //     icon: 'none'
+  //   });
+  //   return;
+  // }
+  const res = userData.changePwd(oldAccount.value, newPasswords.value);
+  res.then(data => {
+    if (data == 1) {
+      oldAccount.value = '';
+      newPassword.value = '';
+      newPasswords.value = '';
+      idCode.value = '';
+      status2.value = true;
+      uni.showToast({
+        title: '修改成功',
+        icon: 'none'
+      });
+    } else {
+      uni.showToast({
+        title: data,
+        icon: 'none'
+      });
+      return;
+    }
+  })
 
 }
 // 注册
 const logon = async () => {
-
+  if (newAccount.value.length != 11 || isNaN(Number(newAccount.value))) {
+    uni.showToast({
+      title: '账号格式错误',
+      icon: 'none'
+    });
+    return;
+  }
+  if (newPassword.value.length < 8 || newPasswords.value.length < 8) {
+    uni.showToast({
+      title: '密码长度不能少于8位！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (!idCode.value) {
+    uni.showToast({
+      title: '请输入验证码！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (newPassword.value != newPasswords.value) {
+    uni.showToast({
+      title: '密码必须一致！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (checkIdCode != idCode.value) {
+    uni.showToast({
+      title: '验证码错误！',
+      icon: 'none'
+    });
+    return;
+  }
+  await userData.logon(newAccount.value, newPasswords.value);
+  newAccount.value = '';
+  newPassword.value = '';
+  newPasswords.value = '';
+  idCode.value = '';
+  status.value = true;
+  uni.showToast({
+    title: '注册成功',
+    icon: 'none'
+  });
 }
 </script>
 

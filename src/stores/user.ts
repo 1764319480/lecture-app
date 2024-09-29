@@ -96,9 +96,9 @@ export const useUser = defineStore('user', () => {
     });
     // console.log(res);
     if (res.data.hasOwnProperty('error')) {
-      return res.data.error;
+      return false;
     } else {
-      return res.data.message;
+      return true;
     }
   }
   // 修改密码
@@ -107,6 +107,7 @@ export const useUser = defineStore('user', () => {
       userName,
       userPwd
     });
+    console.log(res)
     if (res.data.hasOwnProperty('error')) {
       // console.log(res.data.error)
       return res.data.error;

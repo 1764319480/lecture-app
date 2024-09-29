@@ -24,27 +24,40 @@
 </template>
 
 <script setup lang="ts">
+import { useLecture } from '@/stores/lecture';
+import { onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+const lectureData = useLecture();
 // 搜索关键词
 const keyword = ref('');
 // 轮播图数据
-const carousel = ref([
-  {
-    image:'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-    lec_id: 101100
-  },
-  {
-    image:'https://cdn.uviewui.com/uview/swiper/swiper2.png', 
-    lec_id: 101101
-  },
-  { 
-    image:'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-    lec_id: 101102
-  } 
-])
+const carousel = ref();
+const carouselData:any = lectureData.allLecture;//轮播图热门讲座
+onReady(() => {
+  for (let k in carouselData) {
+    carousel.value.push({
+      image: carouselData[k].src,
+      lec_id: carouselData[k].lec_id
+    })
+  }
+})
+// const carousel = ref([
+//   {
+//     image:'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+//     lec_id: 101100
+//   },
+//   {
+//     image:'https://cdn.uviewui.com/uview/swiper/swiper2.png', 
+//     lec_id: 101101
+//   },
+//   { 
+//     image:'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+//     lec_id: 101102
+//   } 
+// ])
 // 轮播图图片跳转
 const goDetail = (index:string | number) => {
-  console.log(carousel.value[index as number].lec_id)
+  // console.log(carousel.value[index as number].lec_id)
 }
 // 热门讲座
 const lectures = ref([

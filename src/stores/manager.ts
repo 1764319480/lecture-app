@@ -30,7 +30,7 @@ export const useManager = defineStore('manager', () => {
     carousel.value = '';
   }
   // 管理员列表
-  const list = ref([]);
+  const list = ref();
   // 获取管理员列表
   async function getManagerList() {
     const res = await myaxios.get('/api/superList');
