@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <!-- <image class="logo" src="/static/logo.png" /> -->
+    <image class="logo" src="/static/image/login5.jpg"/>
     <view class="text-area">
       <view id="loginForm" v-show="status">
         <view v-show="status2">
@@ -127,7 +127,6 @@ import { ref, watch } from 'vue'
 import { useManager } from '@/stores/manager';
 import { useUser } from '@/stores/user';
 import { onReady } from '@dcloudio/uni-app';
-// const lectureData = useLecture();
 const managerData = useManager();
 const userData = useUser();
 // 获取管理员列表
@@ -421,9 +420,17 @@ const logon = async () => {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-image: url('http://192.168.43.22:8080/login5.jpg');
+  // background-image: url('/static/image/login5.jpg');
   // background-size: 200px 400px;
   // background-color: pink;
+  image {
+    width: 100%; /* 设置图片的宽度为div的100% */
+    height: 100%; /* 设置图片的高度为div的100% */
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    margin: 0;
+  }
 }
 
 .logo {
