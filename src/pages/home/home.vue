@@ -15,7 +15,7 @@
       <br>
       <br>
       <!-- 热门讲座 -->
-      <view id="someLecture">
+      <view>
         <LectureCard :lectures="lectures"></LectureCard>
       </view>
     </view>
@@ -32,15 +32,17 @@ const lectureData = useLecture();
 const keyword = ref('');
 // 轮播图数据
 const carousel = ref(new Array);
-const carouselData:any = lectureData.carousel;//轮播图热门讲座
-// console.log(carouselData)
-onReady(() => {
+const carouselData:any = lectureData.carousel;//轮播图讲座
+// 热门讲座
+const lectures = ref();
+onReady(async () => {
   for (let k in carouselData) {
     carousel.value.push({
       image: carouselData[k].src,
       lec_id: carouselData[k].lec_id
     })
   }
+  lectures.value = await lectureData.hotLecture();
 })
 // 轮播图图片跳转
 const goDetail = (index:number) => {
@@ -50,39 +52,12 @@ const goDetail = (index:number) => {
   })
   // console.log(carousel.value[index as number].lec_id)
 }
-// 热门讲座
-const lectures = ref([
-  {
-    lec_title: "房屋清洁知识课堂",
-    lec_id: "101111",
-    lec_master: "张先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 1,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101112",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  }
-]);
+// 搜索
 const search = (key: string | number) => {
-  console.log(key);
+  // console.log(key);
+  uni.navigateTo({
+    url: `/pages/search/search?keyword=${key}`
+  })
 }
 </script>
 

@@ -4,18 +4,18 @@
     </up-navbar>
     <view class="text-area">
       <view class="options">
-        <view><text>讲座名称：</text>{{ lectureDetails.lec_title }}</view>
-        <view><text>讲座编号：</text>{{ lectureDetails.lec_id }}</view>
-        <view><text>举办方：</text>{{ lectureDetails.lec_master }}</view>
-        <view><text>举办时间：</text>{{ lectureDetails.lec_time }}</view>
-        <view><text>举办地点：</text>{{ lectureDetails.lec_place }}</view>
-        <view>
-          <view style="display: block; width: 160rpx; border: 0;"><text>介绍：</text></view>{{ lectureDetails.lec_detail }}
+        <view class="option"><text class="text">讲座名称：</text>{{ lectureDetails.lec_title }}</view>
+        <view class="option"><text class="text">讲座编号：</text>{{ lectureDetails.lec_id }}</view>
+        <view class="option"><text class="text">举办方：</text>{{ lectureDetails.lec_master }}</view>
+        <view class="option"><text class="text">举办时间：</text>{{ lectureDetails.lec_time }}</view>
+        <view class="option"><text class="text">举办地点：</text>{{ lectureDetails.lec_place }}</view>
+        <view class="option">
+          <view style="display: block; width: 160rpx; border: 0;"><text class="text">介绍：</text></view>{{ lectureDetails.lec_detail }}
         </view>
-        <view><text>讲座类型：</text>{{ lectureData.lectureType[lectureDetails.lec_type] }}</view>
-        <view><text>座位数量：</text>{{ lectureDetails.lec_num }}</view>
-        <view><text>剩余数量：</text>{{ lectureDetails.lec_num - lectureDetails.lec_length }}</view>
-        <view>
+        <view class="option"><text class="text">讲座类型：</text>{{ lectureData.lectureType[lectureDetails.lec_type] }}</view>
+        <view class="option"><text class="text">座位数量：</text>{{ lectureDetails.lec_num }}</view>
+        <view class="option"><text class="text">剩余数量：</text>{{ lectureDetails.lec_num - lectureDetails.lec_length }}</view>
+        <view class="option">
           <up-button shape="circle" text="分享"></up-button>
           <up-button type="primary" @click="show2 = true" shape="circle" text="预约"></up-button>
           <up-button type="primary" @click="show1 = true" shape="circle" text="签到"></up-button>
@@ -166,17 +166,15 @@ const sign_code = ref();
     // background-color: #d6d5d5;
     .options {
         margin: 20rpx 0;
-        view {
+        .option {
           display: flex;
           padding-bottom: 20rpx;
           border-bottom: 2rpx solid rgb(234, 224, 224);
           margin-bottom: 20rpx;
-    
-          text {
+          .text {
             font-weight: bold;
           }
         }
-    
         .removeblank {
           margin: 0;
           padding: 0;

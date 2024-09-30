@@ -2,14 +2,14 @@
   <view class="content">
     <template v-for="item in lectures" :key="item.lec_id">
       <view class="text-area">
-        <view>
+        <view class="view">
           <text style="font-size: 40rpx;">{{ item.lec_title }}</text>
           <text :style="statusStyle(item.lec_status)">{{ statusName(item.lec_status) }}</text>
         </view>
         <!-- <view>
           <text style="color: dimgray; font-size: 20rpx;">举办方：{{ item.lec_master }}</text>
         </view> -->
-        <view>
+        <view class="view">
           <up-button @click="goDetail(item.lec_id)" shape="circle" text="详情"></up-button>
           <up-button type="primary" @click="goPopup(item.lec_title)" shape="circle" text="预约"></up-button>
         </view>
@@ -107,7 +107,7 @@ function statusStyle(status:number) {
     margin: 10rpx 0;
     border-radius: 40rpx;
     background-color: rgb(246, 224, 228);
-    view {
+    .view {
       display: flex;
       align-items: center;
     }

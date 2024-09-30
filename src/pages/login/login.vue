@@ -423,7 +423,7 @@ const logon = async () => {
   // background-image: url('/static/image/login5.jpg');
   // background-size: 200px 400px;
   // background-color: pink;
-  image {
+  .logo {
     width: 100%; /* 设置图片的宽度为div的100% */
     height: 100%; /* 设置图片的高度为div的100% */
     object-fit: cover;
@@ -431,15 +431,6 @@ const logon = async () => {
     z-index: -1;
     margin: 0;
   }
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
 }
 .text-area {
   height: auto;
