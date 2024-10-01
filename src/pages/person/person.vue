@@ -50,7 +50,11 @@
                     </template>
                   </up-input>
                 </view>
-                <button style="width: 100%;background-color: rgb(4, 145, 253);" @click="changePwd">确认</button>
+                <view>
+                  <up-button shape="circle" text="取消" @click="cancleChange"></up-button>
+                  <up-button type="primary" @click="changePwd" shape="circle" text="确认"></up-button>
+                </view>
+                <!-- <button style="width: 100%;background-color: rgb(4, 145, 253);" @click="changePwd">确认</button> -->
               </form>
             </view>
           </u-popup>
@@ -68,7 +72,7 @@
               <view style="display: flex;justify-content: center;">
                 <up-button @click="show2 = false" shape="circle" text="取消"></up-button>
                 &nbsp;&nbsp;
-                <up-button type="primary" @click="show2 = false" shape="circle" text="确定"></up-button>
+                <up-button type="primary" @click="exit" shape="circle" text="确定"></up-button>
               </view>
             </view>
           </up-popup>
@@ -80,8 +84,12 @@
 
 <script setup lang="ts">
 import LectureCard from '@/components/LectureCard/LectureCard.vue';
+import { useLecture } from '@/stores/lecture';
+import { useUser } from '@/stores/user';
 import { ref } from 'vue';
 const src = ref('https://cdn.uviewui.com/uview/album/1.jpg');
+const userData = useUser();
+const lectureData = useLecture();
 // 选项列表
 const list = ref([  
   { name: '已预约' },  
@@ -90,54 +98,9 @@ const list = ref([
   { name: '设置'}  
 ]);
 // 为选项卡绑定数据
-const order = ref([
-  {
-    lec_title: "已预约知识课堂",
-    lec_id: "101111",
-    lec_master: "张先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 1,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  }
-]);
-const finish = ref([
-  {
-    lec_title: "已完成知识课堂",
-    lec_id: "101111",
-    lec_master: "张先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 1,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  }
-]);
-const timeout = ref([
-  {
-    lec_title: "已超时知识课堂",
-    lec_id: "101111",
-    lec_master: "张先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 1,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  }
-]);
+const order = ref([...userData.user.lec_order].map(item => lectureData.getLecture(item)));
+const finish = ref([...userData.user.lec_finish].map(item => lectureData.getLecture(item)));
+const timeout = ref([...userData.user.lec_timeout].map(item => lectureData.getLecture(item)));
 // 选项卡的显示与隐藏
 // const statusList:boolean[] = [false, false, false, false];
 const showOrder = ref(true);
@@ -202,17 +165,105 @@ const changeEye2 = () => {
   }
 }
 // 发送验证码
-const timeText = ref('发送验证码')
-const sendIdCode = (value: string) => {
-  timeText.value = value;
+let timer:any = null;
+let checkIdCode:number|string;
+const timeText = ref('发送验证码');
+const sendIdCode =  async (typeText:string) => {
+    if (!timer) {
+        uni.showToast({
+          title: '发送成功',
+          icon: 'none'
+        });
+        let seconds = 60;
+        timer = setInterval(() => {
+            if (seconds == 0) {
+                timeText.value = '发送验证码';
+                checkIdCode = '';//1分钟验证码过期
+                clearInterval(timer);
+                timer = null;
+            } else {
+                timeText.value = seconds.toString();
+                seconds--;
+            }
+        }, 1000)
+        checkIdCode = Math.floor(Math.random() * 900000) + 100000;
+        console.log(`尊敬的用户，您正在进行${typeText}操作，这是您的验证码:${checkIdCode}，1分钟内有效！`)
+    }
+}
+// 取消修改
+const cancleChange = () => {
+  show1.value = false;
+  newPassword.value = '';
+  newPasswords.value = '';
+  idCode.value = '';
 }
 // 修改密码
 const show1 = ref(false);
 const changePwd = async () => {
-  show1.value = false;
+  if (newPassword.value.length < 8 || newPasswords.value.length < 8) {
+    uni.showToast({
+      title: '密码长度不能少于8位！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (!idCode.value) {
+    uni.showToast({
+      title: '请输入验证码！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (newPassword.value != newPasswords.value) {
+    uni.showToast({
+      title: '密码必须一致！',
+      icon: 'none'
+    });
+    return;
+  }
+  if (checkIdCode != idCode.value) {
+    uni.showToast({
+      title: '验证码错误！',
+      icon: 'none'
+    });
+    return;
+  }
+  const res = userData.changePwd(userData.user.userName, newPasswords.value);
+  res.then(data => {
+    if (data == 1) {
+      show2.value = false;
+      newPassword.value = '';
+      newPasswords.value = '';
+      idCode.value = '';
+      uni.showToast({
+        title: '修改成功，请重新登录',
+        icon: 'none'
+      });
+      setTimeout(() => {
+        uni.redirectTo({
+          url: '/pages/login/login'
+        })
+      },1000)
+    } else {
+      uni.showToast({
+        title: data,
+        icon: 'none'
+      });
+      return;
+    }
+  })
+
 }
 // 退出登录
 const show2 = ref(false);
+const exit = () => {
+  userData.setTimer(false);
+  uni.clearStorage();
+  userData.clear();
+  uni.redirectTo({
+    url: '/pages/login/login'
+  })
+}
 </script>
 
 <style lang="scss" scoped>
