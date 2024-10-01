@@ -140,7 +140,7 @@ onReady(() => {
 // 获取管理员列表
 onReady(async () => {
     await managerData.getManagerList();
-    userData.setTimer(false);
+    // userData.setTimer(false);
 })
 // 切换登录和注册
 const status = ref(true);
