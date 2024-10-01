@@ -43,12 +43,14 @@ export const useUser = defineStore('user', () => {
       uni.setStorageSync('token', user.value.token);
       updateUser();
       lectureData.getCarousel();
-      timer.value = setInterval(updateUser, 1000*10);
+      setTimer(false);
+      setTimer(true);
+      // timer.value = setInterval(updateUser, 1000*10);
       return 1;
     }
   }
   // 定时器
-  function setTimer (option:any) {
+  function setTimer (option:boolean) {
     if (option) {
       timer.value = setInterval(updateUser, 1000*10);
     } else {
