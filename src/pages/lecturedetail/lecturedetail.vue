@@ -2,7 +2,7 @@
   <view class="content">
     <up-navbar title="讲座详情" @leftClick="goback" :placeholder="true">
     </up-navbar>
-    <view class="text-area">
+    <view class="text-area" v-if="lectureDetails">
       <view class="options">
         <view class="option"><text class="text">讲座名称：</text>{{ lectureDetails.lec_title }}</view>
         <view class="option"><text class="text">讲座编号：</text>{{ lectureDetails.lec_id }}</view>
@@ -12,7 +12,7 @@
         <view class="option">
           <view style="display: block; width: 160rpx; border: 0;"><text class="text">介绍：</text></view>{{ lectureDetails.lec_detail }}
         </view>
-        <view class="option"><text class="text">讲座类型：</text>{{ lectureData.lectureType[lectureDetails.lec_type] }}</view>
+        <view class="option"><text class="text">讲座类型：</text>{{ lec_type}}</view>
         <view class="option"><text class="text">座位数量：</text>{{ lectureDetails.lec_num }}</view>
         <view class="option"><text class="text">剩余数量：</text>{{ lectureDetails.lec_num - lectureDetails.lec_length }}</view>
         <view class="option">
@@ -114,7 +114,10 @@
 </template>
 
 <script setup lang="ts">
+import { useLecture } from '@/stores/lecture';
+import { onLoad, onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+const lectureData = useLecture();
 // 返回
 const goback = () => {
   // uni.switchTab({
@@ -122,26 +125,25 @@ const goback = () => {
   // });
   uni.navigateBack();
 }
-// 讲座操作实例
-interface LectureType {
-  protect: string;
-}
-const lectureData = ref<{ lectureType: LectureType }>({ lectureType: { protect: '环保' } });
-const letype: keyof LectureType = 'protect';
+// 讲座类型中文显示
+const lec_type = ref();
 // 讲座详情
-const lectureDetails = ref({
-  lec_title: "房屋清洁知识课堂",
-  lec_id: "101111",
-  lec_master: "张先生",
-  lec_time: "2024-11-14-10:00-11:10",
-  lec_place: "拓新楼105",
-  lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-  lec_type: letype,
-  lec_status: 1,
-  lec_num: 60,
-  lec_length: 0,
-  lec_people: [],
-  lec_sign: "123123"
+const lec_id = ref();
+const lectureDetails = ref();
+onLoad((options) => {
+  uni.showLoading({
+	title: '加载中'
+});
+  if((options as object).hasOwnProperty('lec_id')) {
+    // @ts-ignore
+    lec_id.value = options.lec_id;
+    lectureDetails.value = lectureData.getLecture(lec_id.value);
+    // @ts-ignore
+    lec_type.value = lectureData.lectureType[lectureDetails.value.lec_type];
+  }
+})
+onReady(() => {
+  uni.hideLoading();
 })
 // 分享
 const show1 = ref(false);

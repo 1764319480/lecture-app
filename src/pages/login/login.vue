@@ -126,9 +126,17 @@ import { ref, watch } from 'vue'
 // import { useLecture } from '@/stores/lecture';
 import { useManager } from '@/stores/manager';
 import { useUser } from '@/stores/user';
-import { onReady } from '@dcloudio/uni-app';
+import { onReady, onLoad } from '@dcloudio/uni-app';
 const managerData = useManager();
 const userData = useUser();
+onLoad(() => {
+  uni.showLoading({
+    title: '加载中'
+  });
+})
+onReady(() => {
+  uni.hideLoading();
+})
 // 获取管理员列表
 onReady(async () => {
     await managerData.getManagerList();

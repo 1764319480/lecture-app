@@ -70,7 +70,7 @@ const goPopup = (title:string) => {
 // 用户数据
 const userData = ref();
 // 详情跳转
-function goDetail(lec_id: string|number) {
+function goDetail(lec_id: string) {
   uni.navigateTo({
     url: `/pages/lecturedetail/lecturedetail?lec_id=${lec_id}`
   })

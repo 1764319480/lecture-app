@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { useLecture } from '@/stores/lecture';
-import { onReady } from '@dcloudio/uni-app';
+import { onLoad, onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 const lectureData = useLecture();
 // 搜索关键词
@@ -59,6 +59,14 @@ const search = (key: string | number) => {
     url: `/pages/search/search?keyword=${key}`
   })
 }
+onLoad(() => {
+  uni.showLoading({
+    title: '加载中'
+  });
+})
+onReady(() => {
+  uni.hideLoading();
+})
 </script>
 
 <style lang="scss" scoped>
