@@ -24,7 +24,10 @@
 </template>
 <script setup lang="ts">
 import LectureCard from '@/components/LectureCard/LectureCard.vue';
+import { useLecture } from '@/stores/lecture';
+import { onLoad } from '@dcloudio/uni-app';
 import { computed, watch, ref } from 'vue';
+const lectureData = useLecture();
 // 多选框按钮
 const culture = ref(true);
 const science = ref(true);
@@ -48,213 +51,16 @@ const alls = computed({
   }
 })
 // 所有讲座信息
-const allLectures = [
-{
-    lec_title: "房屋清洁知识课堂",
-    lec_id: "101111",
-    lec_master: "张先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "protect",
-    lec_status: 1,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101112",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101113",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101114",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101115",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101116",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101117",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101118",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101119",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101110",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101102",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101103",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101105",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  },
-  {
-    lec_title: "道德课堂",
-    lec_id: "101106",
-    lec_master: "李先生",
-    lec_time: "2024-11-14-10:00-11:10",
-    lec_place: "拓新楼105",
-    lec_detail: "掌握高效房屋清洁技巧，打造健康宜居环境，知识课堂等你来学！",
-    lec_type: "other",
-    lec_status: 0,
-    lec_num: 60,
-    lec_length: 0,
-    lec_people: [],
-    lec_sign: "123123"
-  }
-];
+const allLectures = ref([...lectureData.lectures]);
 // 筛选讲座
-const filtLectures = ref([...allLectures]);
+const filtLectures = ref([...allLectures.value]);
 watch(culture, (newValue) => {
     if (!newValue) {
         const newLectures = (filtLectures.value.filter(item => item.lec_type != 'culture'));
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'culture')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'culture')));
     }
 })
 watch(science, (newValue) => {
@@ -263,7 +69,7 @@ watch(science, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'science')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'science')));
     }
 })
 watch(protect, (newValue) => {
@@ -272,7 +78,7 @@ watch(protect, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'protect')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'protect')));
     }
 })
 watch(academic, (newValue) => {
@@ -281,7 +87,7 @@ watch(academic, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'academic')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'academic')));
     }
 })
 watch(topic, (newValue) => {
@@ -290,7 +96,7 @@ watch(topic, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'topic')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'topic')));
     }
 })
 watch(technical, (newValue) => {
@@ -299,7 +105,7 @@ watch(technical, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'technical')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'technical')));
     }
 })
 watch(other, (newValue) => {
@@ -308,7 +114,7 @@ watch(other, (newValue) => {
         filtLectures.value.splice(0, filtLectures.value.length);
         filtLectures.value.push(...newLectures);
     } else {
-        filtLectures.value.push(...(allLectures.filter(item => item.lec_type == 'other')));
+        filtLectures.value.push(...(allLectures.value.filter(item => item.lec_type == 'other')));
     }
 })
 </script>
