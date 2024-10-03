@@ -24,14 +24,15 @@
           <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
               display: flex;justify-content: center;">温馨提示</view>
           <view class="removeblank" style="display: flex; flex-direction: column;justify-content: space-around;height: 200rpx;padding:0 10rpx;">
-            <view class="removeblank" style="display: flex;align-items: center;width: 60vw;">
+            <view class="removeblank" style="margin: 0 5vw; display: flex;align-items: center;width: 80vw;justify-content: space-between;">
               <text style="font-weight: 400;">签到:</text>
               &nbsp;
-              <up-input type="number" v-model="sign_code" placeholder="输入签到码进行签到" clearable />
+              <up-input type="number" v-model="sign_code" placeholder="输入签到码进行签到" clearable/>
             </view>
-            <view class="removeblank" style="display: flex; justify-content: center;align-items: center;">
-              <view class="removeblank"><up-button @click="show1 = false" shape="circle" text="取消"></up-button></view>
-              <view class="removeblank"><up-button type="primary" @click="show1 = false" shape="circle" text="确定"></up-button></view>
+            <view class="removeblank" style="width: 80vw;margin: 0 5vw;display: flex;align-items: center;justify-content: center;">
+              <up-button @click="show1 = false" shape="circle" text="取消"></up-button>
+              &nbsp;
+              <up-button type="primary" @click="show1 = false" shape="circle" text="确定"></up-button>
             </view>
           </view>
         </up-popup>
@@ -39,15 +40,16 @@
           <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
               display: flex;justify-content: center;">温馨提示</view>
           <view class="removeblank"
-            style="display: flex; flex-direction: column;justify-content: space-around;height: 200rpx;padding:0 10rpx;">
+            style="display: flex; flex-direction: column;justify-content: space-around;align-items: center; height: 200rpx;padding:0 10rpx;">
             <view class="removeblank">
               <text style="color: red;">确定</text>
               预约讲座《
               <text style="color: blue;">{{ lectureDetails.lec_title }}</text>》？
             </view>
-            <view class="removeblank" style="display: flex; justify-content: center;align-items: center;">
-              <view class="removeblank"><up-button @click="show2 = false" shape="circle" text="取消"></up-button></view>
-              <view class="removeblank"><up-button type="primary" @click="show2 = false" shape="circle" text="确定"></up-button></view>
+            <view class="removeblank" style="width: 80vw;margin: 0 5vw;display: flex;align-items: center;justify-content: center;">
+              <up-button @click="show2 = false" shape="circle" text="取消"></up-button>
+              &nbsp;
+              <up-button type="primary" @click="show2 = false" shape="circle" text="确定"></up-button>
             </view>
           </view>
         </up-popup>

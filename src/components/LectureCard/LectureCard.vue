@@ -11,22 +11,23 @@
         </view> -->
         <view class="view">
           <up-button @click="goDetail(item.lec_id)" shape="circle" text="详情"></up-button>
-          <up-button type="primary" @click="goPopup(item.lec_title)" shape="circle" text="预约"></up-button>
+          <up-button type="primary" @click="goPopup(item.lec_title, item.lec_id)" shape="circle" text="预约"></up-button>
         </view>
       </view>
     </template>
     <up-popup :show="show" :round="10" mode="center" :safeAreaInsetBottom=false>
       <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
               display: flex;justify-content: center;">温馨提示</view>
-      <view style="display: flex; flex-direction: column;justify-content: space-around;height: 200rpx;padding:0 10rpx;">
+      <view style="display: flex; flex-direction: column;justify-content: space-around;align-items: center; height: 200rpx;padding:0 10rpx;">
         <view>
           <text style="color: red;">确定</text>
           预约讲座《
           <text style="color: blue;">{{ select_title }}</text>》？
         </view>
-        <view style="display: flex; justify-content: center;align-items: center;">
-          <view><up-button @click="show = false" shape="circle" text="取消" ></up-button></view>
-          <view><up-button type="primary" @click="show = false" shape="circle" text="确定" ></up-button></view>
+        <view style="display: flex;align-items: center;width: 80vw;margin: 0 5vw;">
+          <up-button @click="show = false" shape="circle" text="取消" ></up-button>
+          &nbsp;
+          <up-button type="primary" @click="orderLecture()" shape="circle" text="确定" ></up-button>
         </view>
       </view>
     </up-popup>
@@ -61,11 +62,13 @@ const props = defineProps({
 });
 // 弹出框显示与隐藏
 const show = ref(false);
-// 选中讲座时的标题
-const select_title = ref('')
-const goPopup = (title:string) => {
+// 选中讲座时的标题和id
+const select_title = ref('');
+const select_id = ref('');
+const goPopup = (title:string, id:string) => {
   show.value = true;
-  select_title.value = title
+  select_title.value = title;
+  select_id.value = id;
 }
 // 用户数据
 const userData = ref();
@@ -90,6 +93,14 @@ function statusStyle(status:number) {
         case 0: return { color: 'red', 'font-size': '18rpx' };
         case 1: return { color: 'blue', 'font-size': '18rpx' };
     }
+}
+// 预约讲座
+const orderLecture = () => {
+  if (select_title.value = '') {
+    show.value = false;
+    return;
+  }
+  
 }
 </script>
 

@@ -22,11 +22,11 @@
           <up-icon label="修改密码" size="30" name="/static/image/changepwd.png"></up-icon>
           <u-popup :show="show1" :round="10" mode="center" :safeAreaInsetBottom=false>
             <view class="changePwd-style">
-              <view style="justify-content: center;margin-top: 10rpx;">
+              <view class="view" style="justify-content: center;margin-top: 10rpx;">
                 <text style="font-size: 8vw;">修改密码</text>
               </view>
               <form action="">
-                <view>
+                <view class="view">
                   验证码：<text style="color: transparent;">透</text>
                   <up-input v-model="idCode" type="number" placeholder="请输入验证码">
                     <template #suffix>
@@ -34,7 +34,7 @@
                     </template>
                   </up-input>
                 </view>
-                <view>
+                <view class="view">
                   密码：<text style="color: transparent;">透明</text>
                   <up-input v-model="newPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
                     <template #suffix>
@@ -42,7 +42,7 @@
                     </template>
                   </up-input>
                 </view>
-                <view>
+                <view class="view">
                   确认密码：
                   <up-input v-model="newPasswords" :type="passwordType.secondPwd" placeholder="请再次输入密码">
                     <template #suffix>
@@ -50,8 +50,9 @@
                     </template>
                   </up-input>
                 </view>
-                <view>
+                <view class="view">
                   <up-button shape="circle" text="取消" @click="cancleChange"></up-button>
+                  &nbsp;
                   <up-button type="primary" @click="changePwd" shape="circle" text="确认"></up-button>
                 </view>
                 <!-- <button style="width: 100%;background-color: rgb(4, 145, 253);" @click="changePwd">确认</button> -->
@@ -69,7 +70,7 @@
               <view>
                 <text style="color: blue;font-size: 40rpx;">确定退出登录吗?</text>
               </view>
-              <view style="display: flex;justify-content: center;">
+              <view style="width: 80vw;margin: 0 5vw;display: flex;align-items: center;">
                 <up-button @click="show2 = false" shape="circle" text="取消"></up-button>
                 &nbsp;&nbsp;
                 <up-button type="primary" @click="exit" shape="circle" text="确定"></up-button>
@@ -287,7 +288,7 @@ const exit = () => {
         margin: 20rpx 0;
         .changePwd-style {
           width: 90vw;
-          view {
+          .view {
             width: 80vw;
             margin: 0 5vw;
             display: flex;
