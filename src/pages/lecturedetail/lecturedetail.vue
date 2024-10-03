@@ -53,7 +53,7 @@
           <view class="removeblank"
             style="display: flex; flex-direction: column;justify-content: space-around;align-items: center; height: 200rpx;padding:0 10rpx;">
             <view class="removeblank">
-              <text style="color: red;">确定</text>
+              <text style="color: red;">{{ userData.user.lec_order.includes(lectureDetails.lec_id) ? '确定取消' : '确定' }}</text>
               预约讲座《
               <text style="color: blue;">{{ lectureDetails.lec_title }}</text>》？
             </view>
