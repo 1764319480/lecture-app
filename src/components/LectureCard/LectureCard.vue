@@ -3,15 +3,20 @@
     <template v-for="item in lectures" :key="item.lec_id">
       <view class="text-area">
         <view class="view">
-          <text style="font-size: 40rpx;">{{ item.lec_title }}</text>
+          <text style="font-size: 40rpx;">{{ item.lec_title.length < 9 ? item.lec_title : item.lec_title.slice(0,8) + '...' }}</text>
           <text :style="statusStyle(item.lec_status)">{{ statusName(item.lec_status) }}</text>
         </view>
         <!-- <view>
           <text style="color: dimgray; font-size: 20rpx;">举办方：{{ item.lec_master }}</text>
         </view> -->
-        <view class="view">
+        <view class="view" style="width: 200rpx;">
           <up-button @click="goDetail(item.lec_id)" shape="circle" text="详情"></up-button>
-          <up-button type="primary" @click="goPopup(item.lec_title, item.lec_id)" shape="circle" text="预约"></up-button>
+          <up-button :type="userData.user.lec_order?.includes(item.lec_id) ? 'success' : 'primary'"
+           @click="goPopup(item.lec_title, item.lec_id)" shape="circle"
+          :text="userData.user.lec_order?.includes(item.lec_id)
+              || userData.user.lec_finish?.includes(item.lec_id)
+              || userData.user.lec_timeout?.includes(item.lec_id) ? '已预约' : '预约'"
+              :disabled="item.lec_status == 1 ? false : true"></up-button>
         </view>
       </view>
     </template>
@@ -20,7 +25,7 @@
               display: flex;justify-content: center;">温馨提示</view>
       <view style="display: flex; flex-direction: column;justify-content: space-around;align-items: center; height: 200rpx;padding:0 10rpx;">
         <view>
-          <text style="color: red;">确定</text>
+          <text style="color: red;">{{ userData.user.lec_order.includes(select_id) ? '确定取消' : '确定'}}</text>
           预约讲座《
           <text style="color: blue;">{{ select_title }}</text>》？
         </view>
@@ -41,6 +46,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { useUser } from '@/stores/user';
 import { ref } from 'vue';
 // 讲座结构
 interface lectureStruct  {
@@ -71,7 +77,7 @@ const goPopup = (title:string, id:string) => {
   select_id.value = id;
 }
 // 用户数据
-const userData = ref();
+const userData = useUser();
 // 详情跳转
 function goDetail(lec_id: string) {
   uni.navigateTo({
@@ -96,11 +102,8 @@ function statusStyle(status:number) {
 }
 // 预约讲座
 const orderLecture = () => {
-  if (select_title.value = '') {
-    show.value = false;
-    return;
-  }
-  
+  show.value = false;
+  userData.changeLecture(select_id.value);
 }
 </script>
 
