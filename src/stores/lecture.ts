@@ -45,10 +45,10 @@ export const useLecture = defineStore('lecture', () => {
   }
   // 预约讲座
   function orderLecture(lecId:string, userName:string) {
-    for (let k in lectures) {
-      if (lectures.value[k].lec_id == lecId) {
-        lectures.value[k].lec_people.push(userName);
-        lectures.value[k].lec_length++;
+    for (let k of  lectures.value) {
+      if (k.lec_id == lecId) {
+        k.lec_people.push(userName);
+        k.lec_length++;
         return true;
       }
     }
@@ -56,10 +56,10 @@ export const useLecture = defineStore('lecture', () => {
   }
   //取消预约讲座
   function cancelLecture(lecId:string, userName:string) {
-    for (let k in lectures) {
-      if (lectures.value[k].lec_id == lecId) {
-        lectures.value[k].lec_people = lectures.value[k].lec_people.filter((item:string) => item != userName);
-        lectures.value[k].lec_length--;
+    for (let k of lectures.value) {
+      if (k.lec_id == lecId) {
+        k.lec_people = k.lec_people.filter((item:string) => item != userName);
+        k.lec_length--;
         return true;
       }
     }
