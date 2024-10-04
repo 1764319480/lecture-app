@@ -11,12 +11,8 @@
         </view> -->
         <view class="view" style="width: 200rpx;">
           <up-button @click="goDetail(item.lec_id)" shape="circle" text="详情"></up-button>
-          <up-button :type="userData.user.lec_order?.includes(item.lec_id) ? 'success' : 'primary'"
-           @click="goPopup(item.lec_title, item.lec_id)" shape="circle"
-          :text="userData.user.lec_order?.includes(item.lec_id)
-              || userData.user.lec_finish?.includes(item.lec_id)
-              || userData.user.lec_timeout?.includes(item.lec_id) ? '已预约' : '预约'"
-              :disabled="item.lec_status == 1 ? false : true"></up-button>
+          <up-button :type="btn_color(item.lec_id)" @click="goPopup(item.lec_title, item.lec_id)" shape="circle"
+          :text="btn_text(item.lec_id)" :disabled="item.lec_status == 1 ? false : true"></up-button>
         </view>
       </view>
     </template>
@@ -47,7 +43,7 @@ export default {
 
 <script setup lang="ts">
 import { useUser } from '@/stores/user';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 // 讲座结构
 interface lectureStruct  {
   lec_title: string,
@@ -104,6 +100,25 @@ function statusStyle(status:number) {
 const orderLecture = () => {
   show.value = false;
   userData.changeLecture(select_id.value);
+}
+// 按钮颜色动态变化
+const btn_color = (lec_id: string) => {
+  if (userData.user.lec_order.includes(lec_id)
+    || userData.user.lec_finish.includes(lec_id))
+    return 'success';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return 'error';
+  else return 'primary';
+}
+// 按钮文字动态变化
+const btn_text = (lec_id: string) => {
+  if (userData.user.lec_order.includes(lec_id))
+    return '已预约';
+  else if (userData.user.lec_finish.includes(lec_id))
+    return '已完成';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return '已超时';
+  else return '预约';
 }
 </script>
 
