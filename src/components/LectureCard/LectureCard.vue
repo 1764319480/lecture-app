@@ -25,7 +25,7 @@
               display: flex;justify-content: center;">温馨提示</view>
       <view style="display: flex; flex-direction: column;justify-content: space-around;align-items: center; height: 200rpx;padding:0 10rpx;">
         <view>
-          <text style="color: red;">{{ userData.user.lec_order.includes(select_id) ? '确定取消' : '确定'}}</text>
+          <text style="color: red;">{{ userData.user.lec_order.includes(select_id) ? '确定取消' : '确定'  }}</text>
           预约讲座《
           <text style="color: blue;">{{ select_title }}</text>》？
         </view>
