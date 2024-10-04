@@ -43,7 +43,7 @@ export default {
 
 <script setup lang="ts">
 import { useUser } from '@/stores/user';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 // 讲座结构
 interface lectureStruct  {
   lec_title: string,
