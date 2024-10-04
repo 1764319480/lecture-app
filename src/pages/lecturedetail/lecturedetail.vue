@@ -18,7 +18,7 @@
         <view class="option"><text class="text">剩余数量：</text>{{ lectureDetails.lec_num - lectureDetails.lec_length }}
         </view>
         <view class="option">
-          <up-button shape="circle" text="分享"></up-button>
+          <up-button shape="circle" text="分享" open-type="share"></up-button>
           &nbsp;
           <up-button :type="btn_color" @click="show2 = true"
             shape="circle" :text="btn_text"
@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { useLecture } from '@/stores/lecture';
 import { useUser } from '@/stores/user';
-import { onLoad, onReady } from '@dcloudio/uni-app';
+import { onLoad, onReady, onShareAppMessage } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 const lectureData = useLecture();
 const userData = useUser();
@@ -127,8 +127,13 @@ const btn_text = computed(() => {
 })
 // 分享
 const show1 = ref(false);
-const share = () => {
+onShareAppMessage(() => {
+  return {
+    title: lectureDetails.value.lec_title,
+    path: `/pages/lecturedetail/lecturedetail?lec_id=${lectureDetails.value.lec_id}`
+  }
 }
+)
 // 预约
 const show2 = ref(false);
 const order = () => {
