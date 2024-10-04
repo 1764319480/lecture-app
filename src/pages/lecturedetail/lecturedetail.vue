@@ -20,13 +20,15 @@
         <view class="option">
           <up-button shape="circle" text="分享"></up-button>
           &nbsp;
-          <up-button :type="userData.user.lec_order?.includes(lectureDetails.lec_id) ? 'success' : 'primary'" @click="show2 = true"
-            shape="circle" :text="userData.user.lec_order?.includes(lectureDetails.lec_id)
-              || userData.user.lec_finish?.includes(lectureDetails.lec_id)
-              || userData.user.lec_timeout?.includes(lectureDetails.lec_id) ? '已预约' : '预约'"
+          <up-button :type="btn_color" @click="show2 = true"
+            shape="circle" :text="btn_text"
               :disabled="lectureDetails.lec_status == 1 ? false : true"></up-button>
           &nbsp;
-          <up-button type="primary" @click="show1 = true" shape="circle" text="签到" v-if="showSign"></up-button>
+          <up-button @click="show1 = true" shape="circle" 
+          :type="userData.user.lec_finish?.includes(lectureDetails.lec_id) ? 'success' : 'primary'"
+          :text="userData.user.lec_finish?.includes(lectureDetails.lec_id) ? '已签到' : '签到'" 
+          :disabled="lectureDetails.lec_status == -1 ? true : false"
+          v-if="userData.user.lec_order.includes(lectureDetails.lec_id) && (lectureDetails.lec_status !== 1)"></up-button>
         </view>
         <up-popup :show="show1" :round="10" mode="center" :safeAreaInsetBottom=false>
           <view style="width: 100%;border-bottom: 2rpx solid grey;font-size: 50rpx;font-weight: bold;
@@ -43,7 +45,7 @@
               style="width: 80vw;margin: 0 5vw;display: flex;align-items: center;justify-content: center;">
               <up-button @click="show1 = false" shape="circle" text="取消"></up-button>
               &nbsp;
-              <up-button type="primary" @click="show1 = false" shape="circle" text="确定"></up-button>
+              <up-button type="primary" @click="toSign" shape="circle" text="确定"></up-button>
             </view>
           </view>
         </up-popup>
@@ -74,7 +76,7 @@
 import { useLecture } from '@/stores/lecture';
 import { useUser } from '@/stores/user';
 import { onLoad, onReady } from '@dcloudio/uni-app';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 const lectureData = useLecture();
 const userData = useUser();
 // 返回
@@ -104,6 +106,25 @@ onLoad((options) => {
 onReady(() => {
   uni.hideLoading();
 })
+// 按钮颜色动态变化
+const btn_color = computed(() => {
+  if (userData.user.lec_order.includes(lectureDetails.value.lec_id) 
+  || userData.user.lec_finish.includes(lectureDetails.value.lec_id))
+    return 'success';
+  else if (userData.user.lec_timeout.includes(lectureDetails.value.lec_id))
+    return 'error';
+  else return 'primary';
+})
+// 按钮文字动态变化
+const btn_text = computed(() => {
+  if (userData.user.lec_order.includes(lectureDetails.value.lec_id))
+    return '已预约';
+  else if (userData.user.lec_finish.includes(lectureDetails.value.lec_id))
+    return '已完成';
+  else if (userData.user.lec_timeout.includes(lectureDetails.value.lec_id))
+    return '已超时';
+  else return '预约';
+})
 // 分享
 const show1 = ref(false);
 const share = () => {
@@ -115,9 +136,21 @@ const order = () => {
   userData.changeLecture(lectureDetails.value.lec_id);
 }
 // 签到
-const showSign = ref(false);
 const sign_code = ref();
-
+const toSign = async () => {
+  if (sign_code.value == '') {
+    uni.showToast({
+      title: '签到码不能为空',
+      icon: 'none'
+    })
+    return;
+  }
+  const res = await userData.toSign(lectureDetails.value.lec_id, sign_code.value);
+  if (res == true) {
+    show1.value = false;
+  }
+  sign_code.value = '';
+}
 </script>
 
 <style lang="scss" scoped>
