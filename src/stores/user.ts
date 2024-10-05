@@ -95,7 +95,7 @@ export const useUser = defineStore('user', () => {
   const allowBack = ref();
   const setAllowBack = (lock:boolean) => {
     allowBack.value = lock;
-    console.log(allowBack.value)
+    // console.log(allowBack.value)
   }
   // 判断用户是否存在
   async function isLogon(userName:string) {
