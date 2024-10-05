@@ -91,6 +91,12 @@ export const useUser = defineStore('user', () => {
   function setDetailPath(query_id:string) {
     detailPath.value = query_id;
   }
+  // 详情页返回到首页或原路径返回
+  const allowBack = ref();
+  const setAllowBack = (lock:boolean) => {
+    allowBack.value = lock;
+    console.log(allowBack.value)
+  }
   // 判断用户是否存在
   async function isLogon(userName:string) {
     const res = await myaxios.post('/api/isLogon', {
@@ -176,7 +182,7 @@ export const useUser = defineStore('user', () => {
     user.value.lec_timeout.push(lec_id);
   }
 
-  return { getUser, setTimer, timer, updateUser, failSign, toSign, logon, isLogon, clear, user, changeLecture, detailPath, setDetailPath, changePwd, login };
+  return { allowBack, setAllowBack, getUser, setTimer, timer, updateUser, failSign, toSign, logon, isLogon, clear, user, changeLecture, detailPath, setDetailPath, changePwd, login };
 },
   {
     persist:{

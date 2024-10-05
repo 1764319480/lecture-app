@@ -75,16 +75,27 @@
 <script setup lang="ts">
 import { useLecture } from '@/stores/lecture';
 import { useUser } from '@/stores/user';
-import { onLoad, onReady, onShareAppMessage } from '@dcloudio/uni-app';
+import { onHide, onLoad, onReady, onShareAppMessage, onUnload } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 const lectureData = useLecture();
 const userData = useUser();
+onUnload(() => {
+  userData.setAllowBack(false);
+})
+onHide(() => {
+  userData.setAllowBack(false);
+})
 // 返回
 const goback = () => {
-  // uni.switchTab({
-  //   url: '/pages/home/home'
-  // });
-  uni.navigateBack();
+  if(userData.allowBack) {
+    uni.navigateBack();
+  }
+  else {
+    uni.switchTab({
+      url: '/pages/home/home'
+    });
+  }
+  
 }
 // 讲座类型中文显示
 const lec_type = ref();
@@ -128,6 +139,9 @@ const btn_text = computed(() => {
 // 分享
 const show1 = ref(false);
 onShareAppMessage(() => {
+  setTimeout(() => {
+    userData.setAllowBack(true);
+  },500)
   return {
     title: lectureDetails.value.lec_title,
     path: `/pages/lecturedetail/lecturedetail?lec_id=${lectureDetails.value.lec_id}`

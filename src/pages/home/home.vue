@@ -25,9 +25,11 @@
 
 <script setup lang="ts">
 import { useLecture } from '@/stores/lecture';
+import { useUser } from '@/stores/user';
 import { onLoad, onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 const lectureData = useLecture();
+const userData = useUser();
 // 搜索关键词
 const keyword = ref('');
 // 轮播图数据
@@ -47,6 +49,7 @@ onReady(async () => {
 // 轮播图图片跳转
 const goDetail = (index:number) => {
   const lec_id = carousel.value[index].lec_id;
+  userData.setAllowBack(true);
   uni.navigateTo({
     url: `/pages/lecturedetail/lecturedetail?lec_id=${lec_id}`
   })

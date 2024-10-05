@@ -76,6 +76,7 @@ const goPopup = (title:string, id:string) => {
 const userData = useUser();
 // 详情跳转
 function goDetail(lec_id: string) {
+  userData.setAllowBack(true);
   uni.navigateTo({
     url: `/pages/lecturedetail/lecturedetail?lec_id=${lec_id}`
   })
