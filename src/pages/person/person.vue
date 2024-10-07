@@ -87,7 +87,7 @@
 import LectureCard from '@/components/LectureCard/LectureCard.vue';
 import { useLecture } from '@/stores/lecture';
 import { useUser } from '@/stores/user';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 const src = ref('https://cdn.uviewui.com/uview/album/1.jpg');
 const userData = useUser();
 const lectureData = useLecture();
@@ -102,6 +102,11 @@ const list = ref([
 const order = ref([...userData.user.lec_order].map(item => lectureData.getLecture(item)));
 const finish = ref([...userData.user.lec_finish].map(item => lectureData.getLecture(item)));
 const timeout = ref([...userData.user.lec_timeout].map(item => lectureData.getLecture(item)));
+watchEffect(() => {
+  order.value = [...userData.user.lec_order].map(item => lectureData.getLecture(item));
+  finish.value = [...userData.user.lec_finish].map(item => lectureData.getLecture(item));
+  timeout.value = [...userData.user.lec_timeout].map(item => lectureData.getLecture(item));
+})
 // 选项卡的显示与隐藏
 // const statusList:boolean[] = [false, false, false, false];
 const showOrder = ref(true);
