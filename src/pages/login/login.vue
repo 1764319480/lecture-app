@@ -10,11 +10,11 @@
           <form action="">
             <view>
               账号：<text style="color: transparent;">透明</text>
-              <up-input type="number" v-model="oldAccount" placeholder="请输入手机号" clearable />
+              <up-input  type="number" v-model="oldAccount" placeholder="请输入手机号" clearable />
             </view>
             <view>
               密码：<text style="color: transparent;">透明</text>
-              <up-input v-model="oldPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
+              <up-input  v-model="oldPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
                 <template #suffix>
                   <u-icon :name="openEye.firstEye" @tap="changeEye1"></u-icon>
                 </template>
@@ -44,11 +44,11 @@
           <form action="">
             <view>
               账号：<text style="color: transparent;">透明</text>
-              <up-input type="number" v-model="oldAccount" placeholder="请输入手机号" clearable />
+              <up-input  type="number" v-model="oldAccount" placeholder="请输入手机号" clearable />
             </view>
             <view>
               验证码：<text style="color: transparent;">透</text>
-              <up-input v-model="idCode" type="number" placeholder="请输入验证码">
+              <up-input  v-model="idCode" type="number" placeholder="请输入验证码">
                 <template #suffix>
                   <text @tap="sendIdCode('修改密码')" style="font-size: 20rpx;color: blue;">{{ timeText }}</text>
                 </template>
@@ -56,7 +56,7 @@
             </view>
             <view>
               密码：<text style="color: transparent;">透明</text>
-              <up-input v-model="newPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
+              <up-input  v-model="newPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
                 <template #suffix>
                   <u-icon :name="openEye.firstEye" @tap="changeEye1"></u-icon>
                 </template>
@@ -64,7 +64,7 @@
             </view>
             <view>
               确认密码：
-              <up-input v-model="newPasswords" :type="passwordType.secondPwd" placeholder="请再次输入密码">
+              <up-input  v-model="newPasswords" :type="passwordType.secondPwd" placeholder="请再次输入密码">
                 <template #suffix>
                   <u-icon :name="openEye.secondEye" @tap="changeEye2"></u-icon>
                 </template>
@@ -84,11 +84,11 @@
         <form action="">
           <view style="display: flex;align-items: center; ">
             账号：<text style="color: transparent;">透明</text>
-            <up-input type="number" v-model="newAccount" placeholder="请输入手机号" clearable />
+            <up-input  type="number" v-model="newAccount" placeholder="请输入手机号" clearable />
           </view>
           <view style="display: flex; align-items: center;">
             验证码：<text style="color: transparent;">透</text>
-            <up-input v-model="idCode" type="number" placeholder="请输入验证码">
+            <up-input  v-model="idCode" type="number" placeholder="请输入验证码">
               <template #suffix>
                 <text @tap="sendIdCode('注册')" style="font-size: 20rpx;color: blue;">{{ timeText }}</text>
               </template>
@@ -96,7 +96,7 @@
           </view>
           <view style="display: flex; align-items: center;">
             密码：<text style="color: transparent;">透明</text>
-            <up-input v-model="newPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
+            <up-input  v-model="newPassword" :type="passwordType.firstPwd" placeholder="请输入密码">
               <template #suffix>
                 <u-icon :name="openEye.firstEye" @tap="changeEye1"></u-icon>
               </template>
@@ -104,7 +104,7 @@
           </view>
           <view style="display: flex; align-items: center;">
             确认密码：
-            <up-input v-model="newPasswords" :type="passwordType.secondPwd" placeholder="请再次输入密码">
+            <up-input  v-model="newPasswords" :type="passwordType.secondPwd" placeholder="请再次输入密码">
               <template #suffix>
                 <u-icon :name="openEye.secondEye" @tap="changeEye2"></u-icon>
               </template>
